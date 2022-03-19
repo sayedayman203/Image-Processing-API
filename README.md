@@ -1,6 +1,8 @@
 # Image-Processing-API
 
-> default format for all images is jpeg `post image can be any image format`
+> default format for all images is jpeg `POST image can be any image format`
+
+> there is no ui `Postman collection provided`
 
 ## prerun
 
