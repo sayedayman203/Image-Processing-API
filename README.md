@@ -4,18 +4,11 @@
 
 > there is no ui `Postman collection provided`
 
-## prerun
-
-- `.env.template` --> `.env`
-
-- create folder or run `node create-structure.js`:
-
-  - ./public/imgs/full
-  - ./public/imgs/custom
-  - ./public/imgs/thumbnail
-  - ./logs
+## start
 
 - `npm i`
+- for development `npm run start:dev`
+- for production `npm run start:prod`:
 
 ## Scripts
 
