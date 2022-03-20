@@ -15,10 +15,7 @@ import { createResponse } from './helpers/responseFactory';
 const app = express();
 
 //** config
-const NODE_ENV = 'development';
-const NODE_ENV = 'production';
-
-if (NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   // limit 100 request every minute for user
   app.use(
     rateLimit({
@@ -42,7 +39,7 @@ if (NODE_ENV === 'production') {
       stream: accessLogStream,
     })
   );
-} else if (NODE_ENV === 'development') {
+} else if (process.env.NODE_ENV === 'development') {
   // accept request from any domain
   app.use(
     cors({
@@ -74,13 +71,13 @@ app.use(function (req, res, next) {
 // error handler
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
-  if (NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production') {
     fs.appendFile(
       join(__dirname, 'logs', 'error.log'),
       `${new Date().toISOString()}\n----\n${err}\n\n\n\n`,
       (f) => f
     );
-  } else if (NODE_ENV === 'development') {
+  } else if (process.env.NODE_ENV === 'development') {
     // console.log(err);
   }
   res
