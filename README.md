@@ -14,7 +14,7 @@
 
 | Script     | Description                                    |
 | ---------- | ---------------------------------------------- |
-| start      | start server                                   |
+| start      | start server `run build first`                 |
 | start:prod | build & start                                  |
 | start:dev  | start dev mode                                 |
 | build      | build project to ./dist                        |
