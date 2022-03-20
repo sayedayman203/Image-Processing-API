@@ -8,7 +8,7 @@
 
 - `npm i`
 - for development `npm run start:dev`
-- for production `npm run start:prod`:
+- for production `npm run start:prod`
 
 ## Scripts
 
