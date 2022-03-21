@@ -26,7 +26,9 @@
 
 # End Points
 
-# image-proccessing-api
+[Postman collection](https://www.getpostman.com/collections/a8c0c0715ba058605ccc)
+
+---
 
 <!--- If we have only one group/collection, then no need for the "ungrouped" heading -->
 
