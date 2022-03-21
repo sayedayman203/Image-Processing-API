@@ -64,30 +64,32 @@ app.use(
 );
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use((req: Request, res: Response, next: NextFunction): void => {
   next(createError(404));
 });
 
 // error handler
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
-  if (process.env.NODE_ENV === 'production') {
-    fs.appendFile(
-      join(__dirname, 'logs', 'error.log'),
-      `${new Date().toISOString()}\n----\n${err}\n\n\n\n`,
-      (f) => f
-    );
-  } else if (process.env.NODE_ENV === 'development') {
-    // console.log(err);
+app.use(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  (err: HttpError, req: Request, res: Response, _next: NextFunction): void => {
+    if (process.env.NODE_ENV === 'production') {
+      fs.appendFile(
+        join(__dirname, 'logs', 'error.log'),
+        `${new Date().toISOString()}\n----\n${err}\n\n\n\n`,
+        (f) => f
+      );
+    } else if (process.env.NODE_ENV === 'development') {
+      // console.log(err);
+    }
+    res
+      .status(err.status || 500)
+      .json(
+        createResponse(
+          err.status < 500 ? 'fail' : 'error',
+          err.message || 'SERVER_ERROR'
+        )
+      );
   }
-  res
-    .status(err.status || 500)
-    .json(
-      createResponse(
-        err.status < 500 ? 'fail' : 'error',
-        err.message || 'SERVER_ERROR'
-      )
-    );
-});
+);
 
 export default app;

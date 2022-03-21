@@ -1,12 +1,24 @@
 import { join } from 'path';
+import { promises as fs } from 'fs';
 import request from 'supertest';
 
 import app from '../app';
 
 describe('api tests', () => {
   let imgName = '';
-  const testPath = [__dirname, '..', 'assets', 'test'];
+  const imgsPath = [__dirname, '..', '..', 'public', 'imgs'];
+  const testPath = [__dirname, '..', '..', 'public', 'test'];
   const agent = request(app);
+
+  afterAll(async () => {
+    fs.rm(join(...imgsPath, 'full', imgName), {});
+    fs.rm(join(...imgsPath, 'thumbnail', imgName), {});
+    const customName = imgName.split('.');
+    customName.splice(-1, 0, `400X650`);
+    imgName = customName.join('.');
+    fs.rm(join(...imgsPath, 'custom', imgName), {});
+  });
+
   // upload
   it('error validation', async () => {
     const res = await agent.post('/api');

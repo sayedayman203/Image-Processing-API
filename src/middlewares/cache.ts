@@ -6,7 +6,7 @@ export const cacheMW = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): Promise<void> => {
   const { filename } = req.params;
   const { width, height } = req.query;
   try {

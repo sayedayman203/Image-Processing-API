@@ -4,14 +4,20 @@ import { v4 as uuidv4 } from 'uuid';
 // helpers
 import { saveResizeImg } from '../helpers/imgs';
 
-export const resizeImgMWF = (type: 'uploaded' | 'resize') => {
+export const resizeImgMWF = (
+  type: 'uploaded' | 'resize'
+): ((req: Request, res: Response, next: NextFunction) => Promise<void>) => {
   // default format is jpeg cross app
-  return async (req: Request, res: Response, next: NextFunction) => {
+  return async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
     const newFilename = `${uuidv4()}.jpeg`;
     try {
       if (type === 'uploaded' && req.file) {
         const { buffer } = req.file;
-        saveResizeImg(buffer, {
+        await saveResizeImg(buffer, {
           filename: newFilename,
           type: 'full',
         });

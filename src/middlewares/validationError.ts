@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
-import { validationResult } from 'express-validator';
+import { ValidationError, validationResult } from 'express-validator';
 import { createResponse } from '../helpers/responseFactory';
 
 const validationResultAfterFormation = validationResult.withDefaults({
-  formatter: (error) => {
+  formatter: (
+    error: ValidationError
+  ): { value: string; msg: string; param: string } => {
     return {
       value: error.value,
       msg: error.msg,
@@ -16,10 +18,11 @@ export const catchValidationError = (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): void => {
   const result = validationResultAfterFormation(req);
   if (!result.isEmpty()) {
-    return res.status(400).json(createResponse('fail', result.array()));
+    res.status(400).json(createResponse('fail', result.array()));
+  } else {
+    next();
   }
-  next();
 };

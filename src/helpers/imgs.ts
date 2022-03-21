@@ -14,16 +14,18 @@ export const saveResizeImg = (
     width,
     height,
     quality = 100,
+    path = false,
   }: {
     filename: string;
     type?: imageTypes;
     width?: number;
     height?: number;
     quality?: number;
+    path?: boolean; // used in testing
   }
 ): Promise<{ filename: string; fullPath: string }> => {
   return new Promise((resolve, reject) => {
-    if (typeof file === 'string') {
+    if (typeof file === 'string' && !path) {
       file = join(...imgsPath, 'full', file);
     }
 
@@ -40,7 +42,6 @@ export const saveResizeImg = (
 
       const customName = filename.split('.');
       customName.splice(-1, 0, `${width}X${height}`);
-
       filename = customName.join('.');
     } else if (type === 'thumbnail') {
       img.resize({
